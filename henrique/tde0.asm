@@ -6,31 +6,31 @@ global		_start
 _start:
 	lea	rdi, [prompt]
 	call	printstr
-	mov	r12, N
+	mov	r12, N		; contador para dedcrementar
 	call	readint
-	mov	r13, rax
+	mov	r13, rax	; cin >> input >> menor >> maior
 	mov	r14, rax
 	mov	r15, rax
-	jmp	loop_noinput
-loop:
+	jmp	.decrementar	; pois ja esta definido o maior e menor desse input
+.loop:
 	call	readint
 	mov	r15, rax	; r15 = input
-loop_noinput: 
 	mov	rdi, r15 
 	mov	rsi, r13
-	call	menor
+	call	menor		; funcao menor(rdi, rsi) -> rax
 	mov	r13, rax	; r13 = menor
 	mov	rdi, r15
 	mov	rsi, r14
-	call	maior
+	call	maior		; funcao menor(rdi, rsi) -> rax
 	mov	r14, rax	; r14 = maior
+.decrementar:
 	dec	r12
 	test	r12, r12
-	jnz	loop
-fim: ; printar result
+	jnz	.loop
+.fim: ; printar result
 	lea	rdi, [result]
 	call	printstr
-	sub	r14, r13
+	sub	r14, r13	; periodo = maior - menor
 	mov	rdi, r14
 	call	printint
 	call	endl
@@ -49,10 +49,6 @@ maior: ; rdi, rsi
 	cmovle	rax, rsi
 	cmovg	rax, rdi
 	ret
-
-
-;    O programa deve ter, no mínimo, mais uma função além da principal (_start) , respeitando completamente a convenção de chamada estudada (System-V ABI), além de uma terceira função "extract" que testa se um valor passado por parâmetro é impar e negativo.
-;    Entregar apenas um arquivo tde2.asm contendo todo o código, sem compactar.
 
 section	.data
 N	equ 5
