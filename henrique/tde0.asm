@@ -39,15 +39,15 @@ _start:
 
 menor: ; rdi, rsi 
 ; retorna no rax o menor entre os dois	
+	mov	rax, rsi
 	cmp	rdi, rsi
 	cmovle	rax, rdi
-	cmovg	rax, rsi
 	ret
 maior: ; rdi, rsi 
 ; retorna no rax o maior entre os dois	
+	mov	rax, rdi
 	cmp	rdi, rsi
 	cmovle	rax, rsi
-	cmovg	rax, rdi
 	ret
 
 section	.data
